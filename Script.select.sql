@@ -1,56 +1,3 @@
-CREATE TABLE IF NOT EXISTS Genres (
-    genre_id serial PRIMARY KEY,
-    genres_name VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Musicians (
-    musician_id serial PRIMARY KEY,
-    musician_name VARCHAR(30) NOT NULL,
-    alias VARCHAR(30) NOT NULL,
-    genre_id INT REFERENCES Genres(genre_id),
-    country VARCHAR(30) NOT NULL 
-);
-
-CREATE TABLE IF NOT EXISTS GenresMusicians (
-    genre_id int NOT NULL REFERENCES Genres(genre_id),
-    musician_id int NOT NULL REFERENCES Musicians(musician_id),
-    PRIMARY KEY (genre_id, musician_id)
-);
-
-CREATE TABLE IF NOT EXISTS Albums (
-    album_id serial PRIMARY KEY,
-    album_name VARCHAR(30) NOT NULL,
-    album_year INTEGER  
-);
-
-CREATE TABLE IF NOT EXISTS AlbumMusician (
-    album_id int NOT NULL REFERENCES Albums(album_id),
-    musician_id int NOT NULL REFERENCES Musicians(musician_id), 
-    PRIMARY KEY (album_id, musician_id) 
-);
-
-CREATE TABLE IF NOT EXISTS Collections (
-    collection_id serial PRIMARY KEY,
-    collection_name VARCHAR(30) NOT NULL,
-    collection_year INTEGER
-);
-
-CREATE TABLE IF NOT EXISTS Songs (
-    songs_id serial PRIMARY KEY,
-    song_name VARCHAR(30) NOT NULL,
-    duration INTEGER,
-    album_id INT REFERENCES Albums(album_id),
-    genre_id INT REFERENCES Genres(genre_id),
-    UNIQUE (album_id, genre_id)  
-);
-
-CREATE TABLE IF NOT EXISTS MusicCollections (
-    collection_id int NOT NULL REFERENCES Collections(collection_id),  
-    songs_id int NOT NULL REFERENCES Songs(songs_id),
-    PRIMARY KEY (collection_id, songs_id)
-);
-
-
 SELECT song_name, duration
     FROM Songs
     ORDER BY duration desc 
@@ -70,13 +17,13 @@ SELECT musician_name
 
 SELECT song_name /* Имя трека из таблицы треков */
 FROM Songs
-WHERE song_name ILIKE 'мой%' /* Где слово в начале строки */
-OR song_name ILIKE '%мой' /* Где слово в конце строки */
-OR song_name ILIKE '%мой%' /* Где слово в середине строки */
+WHERE song_name ILIKE 'мой %' /* Где слово в начале строки */
+OR song_name ILIKE '% мой' /* Где слово в конце строки */
+OR song_name ILIKE '% мой %' /* Где слово в середине строки */
 OR song_name ILIKE 'мой' /* Где название трека состоит из одного искомого слова */
-OR song_name ILIKE 'my%' /* Где слово в начале строки для "my" */
-OR song_name ILIKE '%my' /* Где слово в конце строки для "my" */
-OR song_name ILIKE '%my%' /* Где слово в середине строки для "my" */
+OR song_name ILIKE 'my %' /* Где слово в начале строки для "my" */
+OR song_name ILIKE '% my' /* Где слово в конце строки для "my" */
+OR song_name ILIKE '% my %' /* Где слово в середине строки для "my" */
 OR song_name ILIKE 'my'; /* Где название трека состоит из одного искомого слова для "my" */;
 
 SELECT g.genres_name, COUNT(ms.musician_id) AS musician_count
