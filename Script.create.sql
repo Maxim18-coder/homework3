@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS Musicians (
     musician_id serial PRIMARY KEY,
     musician_name VARCHAR(30) NOT NULL,
     alias VARCHAR(30) NOT NULL,
-    genre_id INT REFERENCES Genres(genre_id),
     country VARCHAR(30) NOT NULL 
 );
 
@@ -42,7 +41,6 @@ CREATE TABLE IF NOT EXISTS Songs (
     song_name VARCHAR(30) NOT NULL,
     duration INTEGER,
     album_id INT REFERENCES Albums(album_id),
-    genre_id INT REFERENCES Genres(genre_id),
     UNIQUE (album_id, genre_id)  
 );
 

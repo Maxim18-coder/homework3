@@ -42,19 +42,18 @@ SELECT al.album_name, AVG(s.duration) as average_duration
     JOIN songs s ON al.album_id = s.album_id
     GROUP BY al.album_name;
 
-SELECT a.musician_name
-FROM Musicians a
-WHERE a.musician_id NOT IN (
-    SELECT DISTINCT gm.musician_id
-    FROM Songs s
-    JOIN Albums al ON s.album_id = al.album_id
-    JOIN GenresMusicians gm ON gm.genre_id = s.genre_id
+SELECT m.musician_name
+FROM Musicians m
+WHERE m.musician_id NOT IN (
+    SELECT gm.musician_id
+    FROM Genremusicians gm
+    JOIN Albums al ON gm.album_id = al.album_id
     WHERE al.album_year = 2020
 );
 
 SELECT DISTINCT co.collection_name /* Имена сборников */
 FROM Collections co /* Из таблицы сборников */
-JOIN AlbumMusician am ON co.collection_id = am.album_id /* Объединяем с промежуточной таблицей между сборниками и альбомами */
+JOIN AlbumMusician am ON co.collection_id = am.collection_id /* Объединяем с промежуточной таблицей между сборниками и альбомами */
 JOIN Albums al ON am.album_id = al.album_id /* Объединяем с альбомами (необходимо с этим исправлением) */
 JOIN Songs s ON al.album_id = s.album_id /* Объединяем с треками */
 JOIN GenresMusicians gm ON s.genre_id = gm.genre_id /* Объединение с таблицей жанров и музыкантов */

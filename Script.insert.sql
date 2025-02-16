@@ -16,7 +16,7 @@ INSERT INTO Albums (album_name, album_year) VALUES
 ('Sonne', '2014'),
 ('Confession Of Loki', '2019');
 
-INSERT INTO Albums (song_name, duration, album_id) values
+INSERT INTO Songs (song_name, duration, album_id) values
 ('Peacemaker', '239', '1'),
 ('When you know', '246', '1'),
 ('intro', '92', '4'),
