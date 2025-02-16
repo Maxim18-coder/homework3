@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS Musicians (
 );
 
 CREATE TABLE IF NOT EXISTS GenresMusicians (
+    album_id int NOT NULL references Albums(album_id),
     genre_id int NOT NULL REFERENCES Genres(genre_id),
     musician_id int NOT NULL REFERENCES Musicians(musician_id),
     PRIMARY KEY (genre_id, musician_id)
@@ -40,8 +41,7 @@ CREATE TABLE IF NOT EXISTS Songs (
     songs_id serial PRIMARY KEY,
     song_name VARCHAR(30) NOT NULL,
     duration INTEGER,
-    album_id INT REFERENCES Albums(album_id),
-    UNIQUE (album_id, genre_id)  
+    album_id INT REFERENCES Albums(album_id)
 );
 
 CREATE TABLE IF NOT EXISTS MusicCollections (
